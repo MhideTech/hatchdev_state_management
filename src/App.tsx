@@ -239,7 +239,7 @@ const App = () => {
             <span>Redux Toolkit + React + Tailwind CSS</span>
             <span>•</span>
             <a
-              href="https://github.com/WisdomOfogba/hatchdev_state_management"
+              href="https://github.com/MhideTech/hatchdev_state_management"
               target="_blank"
               rel="noreferrer"
               className="hover:text-indigo-600 transition flex items-center gap-1"

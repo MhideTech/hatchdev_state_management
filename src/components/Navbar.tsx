@@ -83,7 +83,7 @@ const Navbar = ({ onToggleSidebar, activeTab = 'dashboard', onOpenProfile }: Nav
 
         {/* GitHub link */}
         <a
-          href="https://github.com/WisdomOfogba/hatchdev_state_management"
+          href="https://github.com/MhideTech/hatchdev_state_management"
           target="_blank"
           rel="noreferrer"
           title="View GitHub Repository"
