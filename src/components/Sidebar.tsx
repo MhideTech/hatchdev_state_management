@@ -10,7 +10,8 @@ import {
   Cpu, 
   Sparkles,
   GitBranch,
-  X
+  X,
+  Palette
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -28,6 +29,7 @@ const Sidebar = ({
 }: SidebarProps) => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
+  const themeMode = useSelector((state: RootState) => state.theme.mode);
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -46,19 +48,19 @@ const Sidebar = ({
       {isOpen && (
         <div 
           onClick={onClose}
-          className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-40 lg:hidden"
+          className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-40 lg:hidden"
         />
       )}
 
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 w-72 bg-slate-900 border-r border-slate-800/90 text-slate-300 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed top-0 bottom-0 left-0 z-50 w-72 bg-slate-900/95 dark:bg-slate-950/90 backdrop-blur-2xl border-r border-slate-800/80 dark:border-white/10 text-slate-300 flex flex-col transition-all duration-300 ease-in-out lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
         {/* Brand Header */}
-        <div className="h-16 px-6 flex items-center justify-between border-b border-slate-800/80">
+        <div className="h-16 px-6 flex items-center justify-between border-b border-slate-800/80 dark:border-white/10">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
               <Sparkles size={18} />
             </div>
             <div>
@@ -66,7 +68,7 @@ const Sidebar = ({
                 StateCraft
               </span>
               <span className="text-[10px] font-medium tracking-wider uppercase text-indigo-400 block -mt-0.5">
-                Redux Toolkit Hub
+                Glassmorphic Redux Hub
               </span>
             </div>
           </div>
@@ -85,7 +87,7 @@ const Sidebar = ({
 
         {/* Live Redux Status Pill */}
         <div className="px-5 pt-4 pb-2">
-          <div className="px-3 py-2 rounded-xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-between text-xs">
+          <div className="px-3 py-2 rounded-xl bg-slate-800/50 dark:bg-slate-900/60 border border-slate-700/60 dark:border-white/10 flex items-center justify-between text-xs backdrop-blur-xs shadow-inner">
             <div className="flex items-center gap-2">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -93,7 +95,7 @@ const Sidebar = ({
               </span>
               <span className="text-slate-300 font-medium text-[11px]">Redux Store</span>
             </div>
-            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-700 text-slate-300">
+            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-700/80 dark:bg-slate-800 text-slate-300 border border-slate-600/50">
               {user.isLoggedIn ? 'Authenticated' : 'Guest'}
             </span>
           </div>
@@ -116,16 +118,16 @@ const Sidebar = ({
                   if (setActiveTab) setActiveTab(item.id);
                   if (onClose) onClose();
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer text-left ${
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer text-left ${
                   isActive
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                    ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/30 border border-indigo-400/30'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 dark:hover:bg-slate-900/50'
                 }`}
               >
                 <Icon size={16} className={isActive ? 'text-white' : 'text-slate-400'} />
                 <span>{item.label}</span>
                 {item.id === 'inspector' && (
-                  <span className="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-indigo-400 border border-slate-700 font-mono">
+                  <span className="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-slate-800/80 text-indigo-400 border border-slate-700 font-mono">
                     Live
                   </span>
                 )}
@@ -137,12 +139,20 @@ const Sidebar = ({
             Store Metrics
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-800/40 border border-slate-800 text-xs space-y-2">
+          <div className="p-3 rounded-xl bg-slate-800/30 dark:bg-slate-900/40 border border-slate-800 dark:border-white/5 text-xs space-y-2.5">
             <div className="flex items-center justify-between text-[11px]">
               <span className="text-slate-400 flex items-center gap-1.5">
                 <Cpu size={12} className="text-indigo-400" /> Slices Loaded
               </span>
-              <span className="font-mono text-slate-200 font-semibold">1 (user)</span>
+              <span className="font-mono text-slate-200 font-semibold">2 (user, theme)</span>
+            </div>
+            <div className="flex items-center justify-between text-[11px]">
+              <span className="text-slate-400 flex items-center gap-1.5">
+                <Palette size={12} className="text-purple-400" /> Theme State
+              </span>
+              <span className="font-mono text-indigo-300 font-semibold uppercase text-[10px]">
+                {themeMode}
+              </span>
             </div>
             <div className="flex items-center justify-between text-[11px]">
               <span className="text-slate-400">Actions Logged</span>
@@ -154,13 +164,13 @@ const Sidebar = ({
         </div>
 
         {/* Bottom User Profile & Logout Section */}
-        <div className="p-4 border-t border-slate-800/80 bg-slate-900/90 space-y-3">
+        <div className="p-4 border-t border-slate-800/80 dark:border-white/10 bg-slate-900/90 dark:bg-slate-950/90 space-y-3">
           <UserProfile variant="sidebar" />
 
           {user.isLoggedIn && (
             <button
               onClick={handleLogout}
-              className="w-full py-2 px-3 rounded-xl text-xs font-semibold text-rose-400 hover:text-white bg-rose-500/10 hover:bg-rose-600 border border-rose-500/20 hover:border-rose-600 transition flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-2 px-3 rounded-xl text-xs font-semibold text-rose-400 hover:text-white bg-rose-500/10 hover:bg-rose-600 border border-rose-500/20 hover:border-rose-600 transition flex items-center justify-center gap-2 cursor-pointer shadow-xs"
             >
               <LogOut size={14} />
               Sign Out from Redux
